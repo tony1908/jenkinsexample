@@ -1,3 +1,3 @@
 FROM node:18-alpine
 
-CMD ["echo", "Hello Worldx"]
+CMD ["echo", "Hello Worldxs"]
