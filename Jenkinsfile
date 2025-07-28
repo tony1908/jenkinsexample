@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = 'toony1908/jenkinsexample'
+    }
+
     triggers {
         githubPush()
     }
@@ -14,7 +18,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'echo "Building the application"'
+                script {
+                    docker.build(DOCKER_IMAGE)
+                }
             }
         }
     }
