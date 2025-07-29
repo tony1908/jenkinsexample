@@ -27,8 +27,11 @@ pipeline {
                     sh 'echo "Docker image built successfully"'
                 }
                 failure {
-                    sh 'echo "Failed to build Docker image"'
-                }
+                    mail to: 'tony1908@gmail.com',
+                         from: 'tony1908@gmail.com',
+                         subject: "Failed to build Docker image ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                         body: "Failed to build Docker image ${env.JOB_NAME} #${env.BUILD_NUMBER} ${env.BUILD_URL}"
+                } 
             }
         }
 
