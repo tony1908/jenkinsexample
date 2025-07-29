@@ -27,10 +27,14 @@ pipeline {
                     sh 'echo "Docker image built successfully"'
                 }
                 failure {
-                    mail to: 'toony1908@gmail.com',
+                    script {
+                        def logLines = currentBuild.rawBuild.getLog(100)
+                        def logText = logLines.join('\n')
+                        mail to: 'toony1908@gmail.com',
                          from: 'toony1908@gmail.com',
                          subject: "Failed to build Docker image ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                         body: "Failed to build Docker image ${env.JOB_NAME} #${env.BUILD_NUMBER} ${env.BUILD_URL}"
+                         body: "Failed to build Docker image ${env.JOB_NAME} #${env.BUILD_NUMBER} ${env.BUILD_URL} \n\n ${logText}"
+                    }
                 } 
             }
         }
@@ -53,4 +57,5 @@ pipeline {
             }
         }
     }
+
 }
